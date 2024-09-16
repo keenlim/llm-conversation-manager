@@ -4,7 +4,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
 from models.conversation import ConversationFull, Conversation
 from contextlib import asynccontextmanager
-from routers import conversations
+from routers import conversations, queries
 
 
 # Call this within your event loop to get beanie setup
@@ -23,6 +23,7 @@ async def lifespan(app:FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(conversations.router, prefix="/conversations")
+app.include_router(queries.router, prefix="/queries")
 
 @app.get("/")
 def index() -> dict:
