@@ -62,12 +62,15 @@ Note: Replace `<your_openai_api_key>` with the actual OpenAI API Key.
 3. To run the application:
 - Build Docker Images
 </br>
+
 From the project's root directory, run:
 ```
 docker-compose build
 ```
+
 - Start Docker Containers
 </br>
+
 Run the following command to start all services defined in `docker-compose.yml`
 ```
 docker-compose up
