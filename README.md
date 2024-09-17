@@ -54,6 +54,7 @@ cd llm-conversation-manner
 2. Configure Environment variables
 </br>
 Create a `.env` file in the backend folder to configure variables for the backend. Populate the `.env` file with the following variables:
+
 ```
 OPENAI_API_KEY=<your_openai_api_key>
 ```
