@@ -2,7 +2,6 @@ import os
 import openai
 from openai import OpenAI
 from fastapi import APIRouter, HTTPException, status
-from pydantic import BaseModel
 from models.prompt import Prompt, QueryRoleType
 from models.conversation import ConversationFull
 from dotenv import load_dotenv
@@ -17,6 +16,7 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 # OpenAI
 client = OpenAI()
 
+# Create Prompt
 @router.post("/{conversation_id}", status_code=status.HTTP_201_CREATED)
 async def create_prompt(conversation_id: str, prompt: Prompt):
     # Get conversation based on the Conversation id
@@ -25,7 +25,7 @@ async def create_prompt(conversation_id: str, prompt: Prompt):
     if conversation is None:
         raise HTTPException(status_code=404, detail="Conversation is not found")
     
-    # TODO: Anoymised the prompt content (Remove and sensitive information)
+    # Anoymised the prompt content (Remove and sensitive information)
     anoymised_content = anonymize_text_using_reg(prompt.content)
     user_prompt = Prompt(role = prompt.role, content = anoymised_content)
     # Append the message into the messages list 
@@ -46,7 +46,7 @@ async def create_prompt(conversation_id: str, prompt: Prompt):
     # Get the assistant response
     assistant_content = stream.choices[0].message.content
 
-    # TODO: Anoymised the response
+    # Anoymised the response
     anoymised_assistant = anonymize_text_using_reg(assistant_content)
     assistant_prompt = Prompt(role=QueryRoleType.assistant, content=assistant_content)
     # Append it to conversation
@@ -59,6 +59,7 @@ async def create_prompt(conversation_id: str, prompt: Prompt):
     # Save the updated conversation
     await conversation.save()
 
+    # Return original user_prompt and assistant_content before anoymised
     return {
         "query": user_prompt, 
         "response": assistant_content

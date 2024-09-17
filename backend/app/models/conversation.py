@@ -1,7 +1,6 @@
 from beanie import Document
-from typing import Dict, List, Optional
-from pydantic import BaseModel, Field
-from enum import Enum
+from typing import Dict, List
+from pydantic import Field
 from .prompt import Prompt
 
 

@@ -1,8 +1,7 @@
 # Extract entities from text
-import os
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
-from typing import Tuple, List, Optional
+from typing import List
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 import re
@@ -70,27 +69,6 @@ def anonymize_text_using_reg(text):
     # Replace credit card numbers (e.g., 1234-5678-9012-3456)
     credit_card_pattern = r'\b(?:\d[ -]*?){13,16}\b'
     text = re.sub(credit_card_pattern, '[CREDIT_CARD]', text)
-    
-    # Replace Social Security Numbers (SSN) - US format (e.g., 123-45-6789)
-    ssn_pattern = r'\b\d{3}-\d{2}-\d{4}\b'
-    text = re.sub(ssn_pattern, '[SSN]', text)
-    
-    # Replace IP addresses
-    ip_pattern = r'\b(?:\d{1,3}\.){3}\d{1,3}\b'
-    text = re.sub(ip_pattern, '[IP_ADDRESS]', text)
-    
-    # Replace URLs
-    url_pattern = r'https?://\S+|www\.\S+'
-    text = re.sub(url_pattern, '[URL]', text)
-    
-    # Replace dates (e.g., 01/01/2020, January 1, 2020)
-    date_pattern = r'\b(?:\d{1,2}[/-])?(?:\d{1,2}[/-])?\d{2,4}\b'
-    text = re.sub(date_pattern, '[DATE]', text)
-    
-    # Replace names (This is more complex and may require NLP techniques.
-    # Here's a simple example to replace capitalized words assuming they are names.)
-    name_pattern = r'\b[A-Z][a-z]+\b'
-    text = re.sub(name_pattern, '[NAME]', text)
     
     return text
 

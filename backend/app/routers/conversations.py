@@ -19,6 +19,7 @@ class ConversationPUT(BaseModel):
     name: str = Field(description="Title of the conversation")
     params: Dict[str, str] = Field(description="Parameter dictionary for overriding defaults prescribed by the AI Model", default={})
 
+# Create Conversation
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_conversation(convo_data: ConversationPOST):
     conversation = Conversation(
@@ -29,11 +30,13 @@ async def create_conversation(convo_data: ConversationPOST):
     conversation = await conversation.insert()
     return conversation
 
+# Get ALL Conversations
 @router.get("/", response_model=List[Conversation])
 async def get_conversation():
     conversations = await Conversation.find_all().to_list()
     return conversations
 
+# Get Specific Conversation by Id
 @router.get("/{id}", response_model=ConversationFull)
 async def get_conversation(id: str):
     conversation = await ConversationFull.get(id)
@@ -41,6 +44,7 @@ async def get_conversation(id: str):
         raise HTTPException(status_code=404, detail="Conversation not found")
     return conversation
 
+# Update Conversation by Id
 @router.put("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def update_conversation(id: str, update_data: ConversationPUT):
     print(update_data)
@@ -58,6 +62,7 @@ async def update_conversation(id: str, update_data: ConversationPUT):
     await conversation.save()
     return {"message": "Conversation updated"}
 
+# Delete Conversation by Id
 @router.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_conversation(id: str):
     conversation = await Conversation.get(id)
