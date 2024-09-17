@@ -83,7 +83,7 @@ docker-compose up
 
 5. To Stop the Application
 
-To stop running the containers, press `Ctrl + C` in the terminal where `docker-compose up ` is running. 
+To stop running the containers, press `Ctrl + C` in the terminal where `docker-compose down ` is running. 
 
 ## Future Improvements
 1. Implement authentication and authorisation to enhance the security of our application using OAuth.
