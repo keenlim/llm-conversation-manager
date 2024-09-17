@@ -102,6 +102,7 @@ export default function Sidebar() {
     if (deletingConversation?._id) {
         deleteMutation.mutate(deletingConversation._id)
     }
+    router.push("/")
   }
 
   const handleNewConversation = async () => {
@@ -156,10 +157,10 @@ export default function Sidebar() {
             </Button>
         </Group>
         {conversations && conversations.map((item) => (
+            <>
             <a
             className={classes.link}
             data-active={item._id === active || undefined}
-            href={`/chat/${item._id}`}
             key={item._id}
             onClick={(event) => {
                 event.preventDefault();
@@ -167,7 +168,7 @@ export default function Sidebar() {
                 router.push(`/chat/${item._id}`)
             }}
             >
-            <Flex align="center" justify="space-between" w="100%">
+                <Flex align="center" justify="space-between" w="100%">
                 <Flex align = "center">
                     <IconBrandWechat className={classes.linkIcon} stroke={1.5} />
                     <span>{item.name}</span>
@@ -188,6 +189,9 @@ export default function Sidebar() {
                 </ActionIcon.Group>
             </Flex>
             </a>
+            
+            </>
+            
         ))}
       </div>
 

@@ -1,6 +1,6 @@
 "use client"
 import { useState, useEffect } from 'react';
-import { Box, Flex, ScrollArea, Text, Group, Textarea, Button, ActionIcon, Center } from '@mantine/core';
+import { Box, Flex, ScrollArea, Text, Group, Textarea, Button, ActionIcon, Center, SegmentedControl } from '@mantine/core';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { IconMessageChatbot, IconNumber3Small, IconSend, IconUser } from '@tabler/icons-react';
 import { useParams } from 'next/navigation';
@@ -9,6 +9,7 @@ import { getSpecificConversation } from '@/utils/api/conversation';
 import { Prompt } from '@/types/Prompt';
 import LoadingAnimation from '@/components/Loading/loading-animation';
 import { generateResponse } from '@/utils/api/prompt';
+import PromptSelection from '@/components/Chat/PromptSelection';
 
 // const messages = [
 //     {role: 'user', content: 'hello i am happy'},
@@ -23,6 +24,7 @@ const ChatWindow = () => {
     const params = useParams<{id: string}>()
     const [messages, setMessages] = useState<Prompt[]>([])
     const [loadingResponse, setLoadingResponse] = useState<boolean>(false)
+    const [models, setModels] = useState<string>('GPT-4o-mini')
 
     // Get the messages data
     const {data, isLoading, isError} = useQuery({
@@ -39,6 +41,24 @@ const ChatWindow = () => {
             setMessages(data?.messages)
         }
     }, [data])
+
+    const handlePrompt = async (message: {role: string, content: string}) => {
+        // Add User Message
+        setMessages((prev) => [...prev, {role: 'user', content: message.content}])
+        setInputValue('')
+        setLoadingResponse(true)
+
+        try{
+            const results = await generateResponse(params.id, {role: 'user', content: message.content})
+
+            if (results){
+                setLoadingResponse(false)
+                setMessages((prev) => [...prev, {role: 'assistant', content: results.response}])
+            }
+        } catch(e){
+            console.log("Unable to get response")
+        }        
+    }
 
     const handleSend = async () => {
         // Add User Message
@@ -77,7 +97,11 @@ const ChatWindow = () => {
 
   return (
     <Flex direction="column" style = {{position: 'relative', height: '100%', width: '100%'}}>
-        <ScrollArea style={{flex:1, padding: '1rem', paddingBottom: '80px'}}>
+        <div style={{flex:1, padding: '1rem', paddingBottom: '80px'}}>
+            <SegmentedControl value = {models} onChange={setModels} data={['GPT-3.5-Turbo', 'GPT-4o-mini']} />
+        </div>
+
+        {messages.length !== 0 ? <ScrollArea style={{flex:1, padding: '1rem', paddingBottom: '80px'}}>
             {messages?.map((msg, index) => (
                 <Box
                     key = {index}
@@ -96,7 +120,8 @@ const ChatWindow = () => {
                     </Group>
                 </Box>
             ))}
-        </ScrollArea>
+        </ScrollArea> : <PromptSelection onSend = {handlePrompt}/>}
+        
         <Box mt="auto" p="md" style = {{
             position: 'fixed',
             bottom: 0,
