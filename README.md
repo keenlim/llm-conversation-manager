@@ -82,7 +82,7 @@ docker-compose up
 - MongoDB: MongoDB is accessible at `mongodb://localhost:27017`
 
 5. To Stop the Application
-</br>
+
 To stop running the containers, press `Ctrl + C` in the terminal where `docker-compose up ` is running. 
 
 ## Future Improvements
