@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from models.prompt import Prompt, QueryRoleType
 from models.conversation import ConversationFull
 from dotenv import load_dotenv
+from utils.anoymised import anoymise_text
 
 router = APIRouter()
 
@@ -24,8 +25,8 @@ async def create_prompt(conversation_id: str, prompt: Prompt):
         raise HTTPException(status_code=404, detail="Conversation is not found")
     
     # TODO: Anoymised the prompt content (Remove and sensitive information)
-
-    user_prompt = Prompt(role = prompt.role, content = prompt.content)
+    anoymised_content = anoymise_text(prompt.content)
+    user_prompt = Prompt(role = prompt.role, content = anoymised_content)
     # Append the message into the messages list 
     conversation.messages.append(user_prompt)
 
@@ -43,11 +44,10 @@ async def create_prompt(conversation_id: str, prompt: Prompt):
     
     # Get the assistant response
     assistant_content = stream.choices[0].message.content
-    # print(assistant_content)
 
     # TODO: Anoymised the response
-
-    assistant_prompt = Prompt(role=QueryRoleType.assistant, content=assistant_content)
+    anoymised_assistant = anoymise_text(assistant_content)
+    assistant_prompt = Prompt(role=QueryRoleType.assistant, content=anoymised_assistant)
     # Append it to conversation
     conversation.messages.append(assistant_prompt)
 

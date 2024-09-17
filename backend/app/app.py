@@ -10,7 +10,7 @@ from routers import conversations, queries
 # Call this within your event loop to get beanie setup
 async def init():
     # Create Motor Client
-    client = AsyncIOMotorClient("mongodb://localhost:27017")
+    client = AsyncIOMotorClient("mongodb://mongodb:27017")
     # Init beanie with the Conversation document class
     await init_beanie(database=client.conversation_db, document_models=[ConversationFull, Conversation])
 

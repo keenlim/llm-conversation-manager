@@ -2,7 +2,7 @@ from beanie import Document
 from typing import Dict, List, Optional
 from pydantic import BaseModel, Field
 from enum import Enum
-from models.prompt import Prompt
+from .prompt import Prompt
 
 
 class Conversation(Document):
