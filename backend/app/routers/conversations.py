@@ -19,7 +19,7 @@ class ConversationPUT(BaseModel):
     name: str = Field(description="Title of the conversation")
     params: Dict[str, str] = Field(description="Parameter dictionary for overriding defaults prescribed by the AI Model", default={})
 
-@router.post("/", response_model=dict, status_code=status.HTTP_201_CREATED)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_conversation(convo_data: ConversationPOST):
     conversation = Conversation(
         name = convo_data.name,
@@ -27,7 +27,7 @@ async def create_conversation(convo_data: ConversationPOST):
     )
 
     conversation = await conversation.insert()
-    return {"id": str(conversation.id)}
+    return conversation
 
 @router.get("/", response_model=List[Conversation])
 async def get_conversation():

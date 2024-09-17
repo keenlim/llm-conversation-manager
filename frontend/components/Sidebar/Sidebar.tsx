@@ -31,17 +31,26 @@ export default function Sidebar() {
 
   const router = useRouter()
 
-  
   const {data, isLoading, isError} = useQuery({
     queryFn: getAllConversation,
     queryKey: ['conversations']
   })
 
   useEffect(() => {
-    if (data) {
-        setConversations(data)
-    }
+      setConversations(data)
   }, [data, isEdited])
+
+  useEffect(() => {
+    const getAllConversations = async () => {
+      const allConversations = await getAllConversation()
+      console.log(allConversations)
+      setConversations(allConversations)
+      setActive(params.id)
+    }
+
+    getAllConversations()
+
+  },[params])
 
   const queryClient = useQueryClient();
 

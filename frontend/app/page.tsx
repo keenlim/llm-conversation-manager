@@ -19,7 +19,6 @@ const Home = () => {
       const urlString = baseString.concat(new_conversation._id)
       router.push(urlString)
     }
-
   }
   return (
     <div>

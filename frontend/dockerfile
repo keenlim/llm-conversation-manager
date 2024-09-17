@@ -1,26 +1,19 @@
 # Build the Next.js application
 FROM node:18-alpine AS base
 
-# Set Working directory
-WORKDIR /app
+# Set the working directory in the container
+WORKDIR /frontend
 
-# Copy package.json and package-lock.json into container
-COPY package*.json ./
+# COPY the current directory contents into the container at /frontend
+COPY . /frontend
 
-# Install dependencies
+# INSTALL any packages
 RUN npm install
 
-# Copy the rest of application
-COPY . .
-
-# Build the Next.js application
-RUN npm run build 
-
-# Install 'serve' to serve the production build
-RUN npm install -g serve 
-
-# Expose the port the app runs on
+# Make port 3000 available 
 EXPOSE 3000
 
+RUN npm run build
+
 # Start the Next.js application
-CMD ["serve", "-s", "out", "-l", "3000"]
+CMD ["npm", "start"]

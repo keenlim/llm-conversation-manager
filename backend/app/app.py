@@ -5,6 +5,7 @@ from beanie import init_beanie
 from models.conversation import ConversationFull, Conversation
 from contextlib import asynccontextmanager
 from routers import conversations, queries
+from fastapi.middleware.cors import CORSMiddleware
 
 
 # Call this within your event loop to get beanie setup
@@ -22,6 +23,16 @@ async def lifespan(app:FastAPI):
     print("Shutdown complete")
 
 app = FastAPI(lifespan=lifespan)
+
+# Add middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(conversations.router, prefix="/conversations")
 app.include_router(queries.router, prefix="/queries")
 

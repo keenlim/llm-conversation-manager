@@ -14,7 +14,7 @@ const DeleteModal: FC<Props> = ({opened, onClose, conversation, onConfirm}) => {
   return (
     <>
       <Modal opened={opened} onClose={onClose} title="Delete Conversation" centered>
-        <Text>Are you sure you want to delete the conversation "{conversation?.name}"?</Text>
+        <Text>Are you sure you want to delete the conversation &quot;{conversation?.name}&quot;?</Text>
         <Group mt="md">
             <Button variant="outline" onClick={onClose}>
                 Cancel
