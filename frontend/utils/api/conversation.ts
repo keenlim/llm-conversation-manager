@@ -1,4 +1,4 @@
-import { Conversation, ConversationFull, ConversationPOST, ConversationPUT } from "@/types/Conversation";
+import { ConversationPOST, ConversationPUT } from "@/types/Conversation";
 
 const backendUrl = "http://localhost:8000";
 
