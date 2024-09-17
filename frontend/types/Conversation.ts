@@ -15,7 +15,7 @@ export interface Conversation {
 }
 
 export interface ConversationFull extends Conversation {
-    message?: Prompt[];
+    messages?: Prompt[];
 }
 
 export interface ConversationPOST {

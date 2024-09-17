@@ -23,7 +23,7 @@ export default function RootLayout({
                 navbar = {{width: 300, breakpoint: 'sm'}}
                 padding = "md"
                >
-                  <AppShell.Navbar p = "md">
+                  <AppShell.Navbar>
                     <Sidebar />
                   </AppShell.Navbar>
                   <AppShell.Main>{children}</AppShell.Main>

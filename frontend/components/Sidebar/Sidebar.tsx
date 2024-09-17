@@ -16,10 +16,12 @@ import LoadingAnimation from '../Loading/loading-animation';
 import EditModal from '../Modal/edit-modal';
 import { useDisclosure } from '@mantine/hooks';
 import DeleteModal from '../Modal/delete-modal';
+import { useParams, useRouter } from 'next/navigation';
 
 export default function Sidebar() {
+  const params = useParams<{id: string}>()
   const [opened, {open, close}] = useDisclosure(false)
-  const [active, setActive] = useState('');
+  const [active, setActive] = useState(params?.id);
   const [conversations, setConversations] = useState<Conversation[] | []>([])
   const [editingConversation, setEditingConversation] = useState<Conversation | null>(null)
   const [isEdited, setIsEdited] = useState<boolean>(false)
@@ -27,6 +29,9 @@ export default function Sidebar() {
   const [deleteModalOpened, { open: openDeleteModal, close: closeDeleteModal }] = useDisclosure(false);
   const [deletingConversation, setDeletingConversation] = useState<Conversation | null>(null);
 
+  const router = useRouter()
+
+  
   const {data, isLoading, isError} = useQuery({
     queryFn: getAllConversation,
     queryKey: ['conversations']
@@ -37,6 +42,7 @@ export default function Sidebar() {
         setConversations(data)
     }
   }, [data, isEdited])
+
   const queryClient = useQueryClient();
 
   // Handle Edit update
@@ -75,7 +81,6 @@ export default function Sidebar() {
   }
 
   // Handle Delete
-
   const deleteMutation = useMutation({
     mutationFn: (id: string) => deleteConversationbyId(id),
     onSuccess: () => {
@@ -107,6 +112,13 @@ export default function Sidebar() {
     const new_conversation = await addNewConversation(newConversation)
     setConversations((prev) => [...prev, new_conversation])
     setActive(new_conversation._id)
+
+    const baseString = '/chat/'
+    if (new_conversation._id) {
+        const urlString = baseString.concat(new_conversation._id)
+        router.push(urlString)
+    }
+
   }
 
   if (isLoading) {
@@ -147,11 +159,12 @@ export default function Sidebar() {
             <a
             className={classes.link}
             data-active={item._id === active || undefined}
-            //   href={item.link}
+            href={`/chat/${item._id}`}
             key={item._id}
             onClick={(event) => {
                 event.preventDefault();
                 setActive(item._id);
+                router.push(`/chat/${item._id}`)
             }}
             >
             <Flex align="center" justify="space-between" w="100%">
