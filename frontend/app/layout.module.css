@@ -1,0 +1,16 @@
+/* components/Layout.module.css */
+
+.container {
+    display: flex;
+    flex-direction: row; /* Arrange children horizontally */
+    height: 100vh; /* Full viewport height */
+    width: 300px;
+  }
+  
+  .content {
+    flex: 1; /* Take up remaining space */
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+    padding: 1rem; /* Optional: Add some padding */
+    background-color: #f5f5f5; /* Optional: Background color for main content */
+  }
+  

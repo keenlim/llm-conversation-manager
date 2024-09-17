@@ -1,11 +1,12 @@
 "use client"
 import Image from 'next/image'
-import { Sidebar } from '@/components/Sidebar/Sidebar'
+import Sidebar from '@/components/Sidebar/Sidebar'
+import ChatWindow from '@/components/Chat'
 
 export default function Home() {
   return (
     <div>
-      <Sidebar />
+      Welcome to my app
     </div>
     
   )

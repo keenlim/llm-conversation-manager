@@ -1,26 +1,23 @@
+"use client"
 import { useState, useEffect } from 'react';
 import { Group, Text, Button, ActionIcon, Flex } from '@mantine/core';
 import {
-  IconBellRinging,
-  IconSwitchHorizontal,
-  IconLogout,
   IconRobot,
-  IconPencilPlus,
   IconBrandWechat,
   IconMessagePlus,
   IconEdit,
   IconTrash
 } from '@tabler/icons-react';
 import classes from './Sidebar.module.css';
-import { Conversation, ConversationFull, ConversationPOST, ConversationPUT } from '@/types/Conversation';
-import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Conversation, ConversationPOST, ConversationPUT } from '@/types/Conversation';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { addNewConversation, deleteConversationbyId, getAllConversation, updateConversationbyId } from '@/utils/api/conversation';
 import LoadingAnimation from '../Loading/loading-animation';
 import EditModal from '../Modal/edit-modal';
 import { useDisclosure } from '@mantine/hooks';
 import DeleteModal from '../Modal/delete-modal';
 
-export function Sidebar() {
+export default function Sidebar() {
   const [opened, {open, close}] = useDisclosure(false)
   const [active, setActive] = useState('');
   const [conversations, setConversations] = useState<Conversation[] | []>([])

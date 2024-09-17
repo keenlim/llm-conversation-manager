@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import { Modal, Button, TextInput, Group, Text } from '@mantine/core';
+import { Modal, Button, Group, Text } from '@mantine/core';
 import { FC } from 'react';
-import { Conversation, ConversationPUT } from '@/types/Conversation';
+import { Conversation } from '@/types/Conversation';
 
 interface Props {
     opened: boolean, 

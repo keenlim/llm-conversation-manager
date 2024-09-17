@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Modal, Button, TextInput, Group } from '@mantine/core';
 import { FC } from 'react';
-import { Conversation, ConversationPUT } from '@/types/Conversation';
+import { Conversation } from '@/types/Conversation';
 
 interface Props {
     opened: boolean, 
@@ -11,13 +11,15 @@ interface Props {
 }
 
 const EditModal: FC<Props> = ({opened, onClose, conversation, onSubmit}) => {
-  const [newName, setNewName] = useState('');
+  const [newName, setNewName] = useState(conversation?.name);
 
   const handleSubmit = (event:any) => {
     event.preventDefault();
 
     if (onSubmit) {
-        onSubmit(newName)
+        if (newName){
+            onSubmit(newName)
+        }
     }
   }
 
@@ -27,7 +29,6 @@ const EditModal: FC<Props> = ({opened, onClose, conversation, onSubmit}) => {
       <form onSubmit={handleSubmit}>
         <TextInput
           label="Conversation Name"
-          value={newName}
           onChange={(event) => setNewName(event.currentTarget.value)}
           required
         />
