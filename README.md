@@ -94,4 +94,4 @@ To stop running the containers, press `Ctrl + C` in the terminal where `docker-c
 5. Multi-Language Support to cater the application to a broader audiene
 
 ## Closing Thoughts
-A simple application that aids in the utilisation of LLMs. By systematically addressing backend and frontend improvements, optimizing infrastructure, enhancing user experience, and embracing best engineering practices, there is a potential to significantly elevate the quality and utility of your LLM-powered application. 
+This is a simple application that aids in the utilisation of LLMs. By systematically addressing backend and frontend improvements, optimizing the infrastructure, enhancing user experience, and embracing best engineering practices, there is a potential to significantly elevate the quality and utility of the LLM-powered application. 
